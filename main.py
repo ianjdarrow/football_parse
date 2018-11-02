@@ -15,9 +15,13 @@ last_request = time.time()
 for year in range(args.start, args.end + 1):
     t = list(teams.values())
     total = db.get_games_by_season(year)
-    if total == 268:
-        print(f"Database complete for {year} season")
+    if total == 268 and not args.force:
+        print(
+            f"Database complete for {year} season (run with --force-update to overwrite)"
+        )
         continue
+    if args.force:
+        db.delete_games_by_season(year)
     for team in t:
         print(f'Pulling {clean_team_name(team)} / {year}')
         req = SeasonRequest(team, year)

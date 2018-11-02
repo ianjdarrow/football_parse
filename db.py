@@ -69,3 +69,11 @@ def get_games_by_season(season):
     c.execute('SELECT count(*) FROM games WHERE season=?', (season, ))
     result = c.fetchone()
     return result[0]
+
+def delete_games_by_season(season):
+    confirm = input(f"Delete and repopulate season {season} data? (y/N) ")
+    if not confirm.strip().lower() == 'y':
+        return
+    c = conn.cursor()
+    c.execute('DELETE FROM games WHERE season=?', (season, ))
+    conn.commit()

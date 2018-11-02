@@ -23,4 +23,9 @@ def get_args():
         default=3.0,
         dest="rate",
         help='seconds per API request')
+    parser.add_argument(
+        '--force-update',
+        dest="force",
+        action='store_true',
+        help='delete existing database entries within range and repopulate')
     return parser.parse_args()
