@@ -22,7 +22,7 @@ for year in range(args.start, args.end + 1):
         req.get_games()
         req.save_season()
         since = time.time() - last_request
-        if since < REQUEST_RATE:
-            wait = REQUEST_RATE - since
+        if since < args.rate:
+            wait = args.rate - since
             print(f"Throttling requests for {'%.2f' % wait}s")
             time.sleep(wait)

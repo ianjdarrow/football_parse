@@ -17,4 +17,10 @@ def get_args():
         default=year,
         dest="end",
         help='year to end (default current year')
+    parser.add_argument(
+        '--rate',
+        type=float,
+        default=2.0,
+        dest="rate",
+        help='seconds per API request')
     return parser.parse_args()
