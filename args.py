@@ -20,7 +20,7 @@ def get_args():
     parser.add_argument(
         '--rate',
         type=float,
-        default=2.0,
+        default=3.0,
         dest="rate",
         help='seconds per API request')
     return parser.parse_args()

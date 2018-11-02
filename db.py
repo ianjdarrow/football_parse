@@ -50,12 +50,13 @@ def save_season(season):
         away_1st_downs,
         away_turnovers,
         date
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-    ''', (s['id'], s['week'], s['home_team'], s['away_team'], s['home_score'],
-            s['away_score'], s['home_total_yards'], s['home_rush_yards'],
-            s['home_pass_yards'], s['home_1st_downs'], s['home_turnovers'],
-            s['away_total_yards'], s['away_rush_yards'], s['away_pass_yards'],
-            s['away_1st_downs'], s['away_turnovers'], s['date']))
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      ''', (s['id'], s['week'], s['home_team'], s['away_team'],
+            s['home_score'], s['away_score'], s['home_total_yards'],
+            s['home_rush_yards'], s['home_pass_yards'], s['home_1st_downs'],
+            s['home_turnovers'], s['away_total_yards'], s['away_rush_yards'],
+            s['away_pass_yards'], s['away_1st_downs'], s['away_turnovers'],
+            s['date']))
         except:
             print(f"Game already added: {s['id']}")
 
