@@ -26,6 +26,8 @@ def clean_team_name(team_name):
         return 'NO'
     if team_name == 'RAI':
         return 'OAK'
+    if team_name == 'KAN':
+        return 'KC'
     if team_name == 'SDG':
         return 'LAC'
     if team_name == 'RAM':
@@ -65,6 +67,8 @@ class SeasonRequest:
             date = format_date(obj["date"], self.year, obj["time"])
 
             result = {
+                "season":
+                self.year,
                 "week":
                 obj['week'],
                 "home_team":

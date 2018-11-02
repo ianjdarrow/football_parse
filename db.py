@@ -6,6 +6,7 @@ def init_db():
     c.execute('''
     CREATE TABLE IF NOT EXISTS games(
       id TEXT UNIQUE NOT NULL,
+      season INT,
       week TEXT,
       home_team TEXT,
       away_team TEXT,
@@ -34,6 +35,7 @@ def save_season(season):
                 '''
       INSERT INTO games(
         id,
+        season,
         week,
         home_team,
         away_team,
@@ -50,8 +52,8 @@ def save_season(season):
         away_1st_downs,
         away_turnovers,
         date
-      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-      ''', (s['id'], s['week'], s['home_team'], s['away_team'],
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      ''', (s['id'], s['season'], s['week'], s['home_team'], s['away_team'],
             s['home_score'], s['away_score'], s['home_total_yards'],
             s['home_rush_yards'], s['home_pass_yards'], s['home_1st_downs'],
             s['home_turnovers'], s['away_total_yards'], s['away_rush_yards'],
@@ -61,3 +63,9 @@ def save_season(season):
             print(f"Game already added: {s['id']}")
 
     conn.commit()
+
+def get_games_by_season(season):
+    c = conn.cursor()
+    c.execute('SELECT count(*) FROM games WHERE season=?', (season, ))
+    result = c.fetchone()
+    return result[0]

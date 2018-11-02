@@ -14,6 +14,10 @@ if args.start < 2005 or args.end > 2018:
 last_request = time.time()
 for year in range(args.start, args.end + 1):
     t = list(teams.values())
+    total = db.get_games_by_season(year)
+    if total == 268:
+        print(f"Database complete for {year} season")
+        continue
     for team in t:
         print(f'Pulling {clean_team_name(team)} / {year}')
         req = SeasonRequest(team, year)
