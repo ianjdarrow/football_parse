@@ -9,6 +9,35 @@ def format_date(date, year, time):
     return datetime.strptime(f'{date}, {year} {time.split(" ")[0]}',
                              "%B %d, %Y %I:%M%p")
 
+def clean_team_name(team_name):
+    if team_name == 'CRD':
+        return 'ARI'
+    if team_name == 'RAV':
+        return 'BAL'
+    if team_name == 'GNB':
+        return 'GB'
+    if team_name == 'HTX':
+        return 'HOU'
+    if team_name == 'CLT':
+        return 'IND'
+    if team_name == 'NWE':
+        return 'NE'
+    if team_name == 'NOR':
+        return 'NO'
+    if team_name == 'RAI':
+        return 'OAK'
+    if team_name == 'SDG':
+        return 'LAC'
+    if team_name == 'RAM':
+        return 'LAR'
+    if team_name == 'SFO':
+        return 'SF'
+    if team_name == 'TAM':
+        return 'TB'
+    if team_name == 'OTI':
+        return 'TEN'
+    return team_name
+
 class SeasonRequest:
     def __init__(self, team, year):
         self.team = team
@@ -72,6 +101,8 @@ class SeasonRequest:
                 "date":
                 str(date),
             }
+            result['home_team'] = clean_team_name(result['home_team'])
+            result['away_team'] = clean_team_name(result['away_team'])
             result[
                 'id'] = f'{self.year}-{result["week"]}-{result["home_team"]}-{result["away_team"]}'
 
@@ -81,4 +112,4 @@ class SeasonRequest:
 
     def save_season(self):
         save_season(self.results)
-        print(f"Saved season: {self.team} / {self.year}")
+        print(f"Saved season: {clean_team_name(self.team)} / {self.year}")

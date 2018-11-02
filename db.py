@@ -6,7 +6,7 @@ def init_db():
     c.execute('''
     CREATE TABLE IF NOT EXISTS games(
       id TEXT UNIQUE NOT NULL,
-      week INTEGER,
+      week TEXT,
       home_team TEXT,
       away_team TEXT,
       home_score INT,
