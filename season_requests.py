@@ -1,46 +1,72 @@
-import requests
-from bs4 import BeautifulSoup as bs
+#!/usr/bin/env python3
+
 from datetime import datetime
+import requests
+
+from bs4 import BeautifulSoup as bs
 
 from teams import teams, keys
 from db import save_season
 
-def format_date(date, year, time):
-    return datetime.strptime(f'{date}, {year} {time.split(" ")[0]}',
-                             "%B %d, %Y %I:%M%p")
 
-def clean_team_name(team_name):
-    if team_name == 'CRD':
-        return 'ARI'
-    if team_name == 'RAV':
-        return 'BAL'
-    if team_name == 'GNB':
-        return 'GB'
-    if team_name == 'HTX':
-        return 'HOU'
-    if team_name == 'CLT':
-        return 'IND'
-    if team_name == 'NWE':
-        return 'NE'
-    if team_name == 'NOR':
-        return 'NO'
-    if team_name == 'RAI':
-        return 'OAK'
-    if team_name == 'KAN':
-        return 'KC'
-    if team_name == 'SDG':
-        return 'LAC'
-    if team_name == 'RAM':
-        return 'LAR'
-    if team_name == 'SFO':
-        return 'SF'
-    if team_name == 'TAM':
-        return 'TB'
-    if team_name == 'OTI':
-        return 'TEN'
-    return team_name
+def format_date(date, year, time):
+    """
+    Create datetime timestamp from (date, year, time)
+
+    """
+    return datetime.strptime(
+        f'{date}, {year} {time.split(" ")[0]}', "%B %d, %Y %I:%M%p"
+    )
+
+
+def clean_team_name(name):
+    """
+    Replace football reference abbreviations with standard NFL abbreviations
+
+    """
+    rename = dict(
+        CRD='ARI',
+        RAV='BAL',
+        GNB='GB',
+        HTX='HOU',
+        CLT='IND',
+        NWE='NE',
+        NOR='NO',
+        RAI='OAK',
+        KAN='KC',
+        SDG='LAC',
+        RAM='LAR',
+        SFO='SF',
+        TAM='TB',
+        OTI='TEN',
+    )
+
+    return rename[name] if name in rename else name
+
 
 class SeasonRequest:
+    """
+    Collect the following game data a given [team, year]:
+
+        season
+        week
+        home_team
+        away_team
+        home_score
+        away_score
+        home_total_yards
+        home_rush_yards
+        home_pass_yards
+        home_turnovers
+        home_1st_downs
+        away_total_yards
+        away_rush_yards
+        away_pass_yards
+        away_turnovers
+        away_1st_downs
+        date
+
+    """
     def __init__(self, team, year):
         self.team = team
         self.year = year
@@ -107,8 +133,7 @@ class SeasonRequest:
             }
             result['home_team'] = clean_team_name(result['home_team'])
             result['away_team'] = clean_team_name(result['away_team'])
-            result[
-                'id'] = f'{self.year}-{result["week"]}-{result["home_team"]}-{result["away_team"]}'
+            result['id'] = f'{self.year}-{result["week"]}-{result["home_team"]}-{result["away_team"]}'
 
             results.append(result)
 
