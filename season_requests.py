@@ -14,6 +14,10 @@ def format_date(date, year, time):
     Create datetime timestamp from (date, year, time)
 
     """
+    month, day = date.split()
+    if month.lower() in ['janurary', 'february']:
+        year += 1
+
     return datetime.strptime(
         f'{date}, {year} {time.split(" ")[0]}', "%B %d, %Y %I:%M%p"
     )
